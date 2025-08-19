@@ -170,11 +170,11 @@
                 <label for="category">Select Competition Category:</label>
                 <select id="category" name="category">
                     <option value="">-- Select a Category --</option>
-                    <option value="junior_boys">Junior Boys</option>
                     <option value="senior_boys">Senior Boys</option>
-                    <option value="junior_girls">Junior Girls</option>
-                    <option value="senior_girls">Senior Girls</option>
+                    <option value="junior_boys">Junior Boys</option>
                     <option value="sub_junior_boys">Sub Junior Boys</option>
+                    <option value="senior_girls">Senior Girls</option>
+                    <option value="junior_girls">Junior Girls</option>
                     <option value="sub_junior_girls">Sub Junior Girls</option>
                 </select>
             </div>
@@ -206,19 +206,6 @@
     <script>
         // Category to item mapping
         const competitionItems = {
-            junior_boys: [
-                "Hand Writing (Arabic)", 
-                "Hand Writing (Malayalam)", 
-                "Pencil Drawing", 
-                "Story Making", 
-                "Painting", 
-                "Qirath", 
-                "Hifz", 
-                "Reading (Arabi Malayalam)", 
-                "Bank", 
-                "Song (Malayalam)", 
-                "Speech (Malayalam)"
-            ],
             senior_boys: [
                 "Hand Writing (Arabic)", 
                 "Hand Writing (English)", 
@@ -235,18 +222,30 @@
                 "Speech (Malayalam)", 
                 "News Reading"
             ],
-            junior_girls: [
+            junior_boys: [
                 "Hand Writing (Arabic)", 
-                "Hand Writing (English)", 
                 "Hand Writing (Malayalam)", 
                 "Pencil Drawing", 
-                "Calligraphy Reading", 
-                "Embroidery", 
                 "Story Making", 
+                "Painting", 
                 "Qirath", 
                 "Hifz", 
+                "Reading (Arabi Malayalam)", 
+                "Bank", 
                 "Song (Malayalam)", 
-                "Reading (Arabi Malayalam)"
+                "Speech (Malayalam)"
+            ],
+            sub_junior_boys: [
+                "Hand Writing (Arabic)", 
+                "Colouring", 
+                "Kettezhuth", 
+                "Memory Test", 
+                "Word Making", 
+                "Qirath", 
+                "Hifz", 
+                "Story Telling", 
+                "Reading (Arabi Malayalam)", 
+                "Song (Malayalam)"
             ],
             senior_girls: [
                 "Hand Writing (Arabic)", 
@@ -267,17 +266,18 @@
                 "Reading (Arabic)", 
                 "Reading (English)"
             ],
-            sub_junior_boys: [
+            junior_girls: [
                 "Hand Writing (Arabic)", 
-                "Colouring", 
-                "Kettezhuth", 
-                "Memory Test", 
-                "Word Making", 
+                "Hand Writing (English)", 
+                "Hand Writing (Malayalam)", 
+                "Pencil Drawing", 
+                "Calligraphy Reading", 
+                "Embroidery", 
+                "Story Making", 
                 "Qirath", 
                 "Hifz", 
-                "Story Telling", 
-                "Reading (Arabi Malayalam)", 
-                "Song (Malayalam)"
+                "Song (Malayalam)", 
+                "Reading (Arabi Malayalam)"
             ],
             sub_junior_girls: [
                 "Hand Writing (Arabic)", 
