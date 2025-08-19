@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Institution Competition Program</title>
+    <style>
+        :root {
+            --primary-green: #2ecc71;
+            --dark-green: #27ae60;
+            --primary-blue: #3498db;
+            --dark-blue: #2980b9;
+            --light-bg: #f9f9f9;
+            --text-dark: #333;
+            --text-light: #fff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-bg);
+            color: var(--text-dark);
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary-green), var(--primary-blue));
+            color: var(--text-light);
+            text-align: center;
+            padding: 2rem 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        
+        .selection-panel {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--dark-blue);
+        }
+        
+        select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        select:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+        }
+        
+        .result-container {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            min-height: 300px;
+        }
+        
+        .poster-container {
+            margin-top: 1rem;
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            background-color: #f5f5f5;
+            min-height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .poster-container img {
+            max-width: 100%;
+            max-height: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .no-selection {
+            color: #777;
+            font-style: italic;
+            padding: 2rem 0;
+        }
+        
+        footer {
+            background: linear-gradient(135deg, var(--primary-blue), var(--dark-green));
+            color: var(--text-light);
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        button {
+            background-color: var(--primary-green);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-weight: 600;
+        }
+        
+        button:hover {
+            background-color: var(--dark-green);
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .selection-panel, .result-container {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>ZEPHYR OF MADEENA</h1>
+        <p class="subtitle">MEELAD FEST 2K25</p>
+    </header>
+    
+    <main>
+        <section class="selection-panel">
+            <div class="form-group">
+                <label for="category">Select Competition Category:</label>
+                <select id="category" name="category">
+                    <option value="">-- Select a Category --</option>
+                    <option value="junior_boys">Junior Boys</option>
+                    <option value="senior_boys">Senior Boys</option>
+                    <option value="junior_girls">Junior Girls</option>
+                    <option value="senior_girls">Senior Girls</option>
+                    <option value="sub_junior_boys">Sub Junior Boys</option>
+                    <option value="sub_junior_girls">Sub Junior Girls</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="item">Select Competition Item:</label>
+                <select id="item" name="item" disabled>
+                    <option value="">-- Select a Category First --</option>
+                </select>
+            </div>
+            
+            <button id="view-btn" disabled>View Result</button>
+        </section>
+        
+        <section class="result-container">
+            <h2>Competition Results</h2>
+            <div id="result-content">
+                <p class="no-selection">Select a category and item to view the result</p>
+            </div>
+            <div id="path-info" style="font-size: 0.9rem; color: #666; margin-top: 1rem;"></div>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; MUNAVVIRUL ISLAM MADRASA. All rights reserved.</p>
+        <p>Contact: <a href="mailto:munavvirulislamnambram@gmail.com">munavvirulislamnambram@gmail.com</a></p>
+    </footer>
+
+    <script>
+        // Category to item mapping
+        const competitionItems = {
+            junior_boys: [
+                "Hand Writing (Arabic)", 
+                "Hand Writing (Malayalam)", 
+                "Pencil Drawing", 
+                "Story Making", 
+                "Painting", 
+                "Qirath", 
+                "Hifz", 
+                "Reading (Arabi Malayalam)", 
+                "Bank", 
+                "Song (Malayalam)", 
+                "Speech (Malayalam)"
+            ],
+            senior_boys: [
+                "Hand Writing (Arabic)", 
+                "Hand Writing (English)", 
+                "Hand Writing (Malayalam)", 
+                "Pencil Drawing", 
+                "Story Making", 
+                "Water Colouring", 
+                "Qirath", 
+                "Bank", 
+                "Reading (Arabic)", 
+                "Reading (English)", 
+                "Song (Malayalam)", 
+                "Song (Arabic)", 
+                "Speech (Malayalam)", 
+                "News Reading"
+            ],
+            junior_girls: [
+                "Hand Writing (Arabic)", 
+                "Hand Writing (English)", 
+                "Hand Writing (Malayalam)", 
+                "Pencil Drawing", 
+                "Calligraphy Reading", 
+                "Embroidery", 
+                "Story Making", 
+                "Qirath", 
+                "Hifz", 
+                "Song (Malayalam)", 
+                "Reading (Arabi Malayalam)"
+            ],
+            senior_girls: [
+                "Hand Writing (Arabic)", 
+                "Hand Writing (English)", 
+                "Hand Writing (Malayalam)", 
+                "Pencil Drawing", 
+                "Essay Writing", 
+                "Story Making", 
+                "Poem Writing", 
+                "Water Colouring", 
+                "Poster Making", 
+                "Calligraphy", 
+                "Glass Painting", 
+                "Embroidery", 
+                "Qirath", 
+                "Hifz", 
+                "Song (Malayalam)", 
+                "Reading (Arabic)", 
+                "Reading (English)"
+            ],
+            sub_junior_boys: [
+                "Hand Writing (Arabic)", 
+                "Colouring", 
+                "Kettezhuth", 
+                "Memory Test", 
+                "Word Making", 
+                "Qirath", 
+                "Hifz", 
+                "Story Telling", 
+                "Reading (Arabi Malayalam)", 
+                "Song (Malayalam)"
+            ],
+            sub_junior_girls: [
+                "Hand Writing (Arabic)", 
+                "Colouring", 
+                "Kettezhuth", 
+                "Memory Test", 
+                "Word Making", 
+                "Qirath", 
+                "Hifz", 
+                "Story Telling", 
+                "Reading (Arabi Malayalam)", 
+                "Song (Malayalam)"
+            ]
+        };
+        
+        // DOM elements
+        const categorySelect = document.getElementById('category');
+        const itemSelect = document.getElementById('item');
+        const viewBtn = document.getElementById('view-btn');
+        const resultContent = document.getElementById('result-content');
+        const pathInfo = document.getElementById('path-info');
+        
+        // Initialize category dropdown
+        categorySelect.addEventListener('change', () => {
+            const selectedCategory = categorySelect.value;
+            
+            if (!selectedCategory) {
+                itemSelect.innerHTML = '<option value="">-- Select a Category First --</option>';
+                itemSelect.disabled = true;
+                viewBtn.disabled = true;
+                return;
+            }
+            
+            // Enable and populate item dropdown
+            itemSelect.disabled = false;
+            const items = competitionItems[selectedCategory];
+            
+            let options = '<option value="">-- Select an Item --</option>';
+            items.forEach(item => {
+                options += `<option value="${item}">${item}</option>`;
+            });
+            
+            itemSelect.innerHTML = options;
+        });
+        
+        itemSelect.addEventListener('change', () => {
+            viewBtn.disabled = !itemSelect.value;
+        });
+        
+        viewBtn.addEventListener('click', () => {
+            const selectedCategory = categorySelect.value;
+            const selectedItem = itemSelect.value;
+            
+            if (!selectedCategory || !selectedItem) return;
+            
+            // Create image filename - simplified version
+            const categoryPrefix = selectedCategory.toUpperCase().replace(/_/g, ' ');
+            const itemName = selectedItem.replace(/[()]/g, '').replace(/\s+/g, '_').toUpperCase();
+            const imageName = `${categoryPrefix}_${itemName}.jpg`;
+            
+            // Display loading state
+            resultContent.innerHTML = `
+                <h3>${selectedItem} Results</h3>
+                <div class="poster-container" id="poster-display">
+                    <p>Loading results...</p>
+                </div>
+            `;
+            
+            pathInfo.textContent = `Looking for: ${imageName}`;
+            
+            // Try to load the image
+            const img = new Image();
+            img.onload = function() {
+                document.getElementById('poster-display').innerHTML = '';
+                document.getElementById('poster-display').appendChild(img);
+                pathInfo.textContent = `Successfully loaded: ${imageName}`;
+            };
+            
+            img.onerror = function() {
+                resultContent.innerHTML = `
+                    <h3>${selectedItem} Results</h3>
+                    <div class="poster-container">
+                        <p style="color: #e74c3c;">Result poster not found</p>
+                        <p>Please ensure the image file exists with the name:</p>
+                        <p><strong>${imageName}</strong></p>
+                        <p>in the same directory as this page.</p>
+                    </div>
+                `;
+                pathInfo.textContent = `Failed to load: ${imageName}`;
+            };
+            
+            img.src = imageName;
+            img.alt = `Results for ${selectedItem}`;
+        });
+    </script>
+</body>
+</html>
